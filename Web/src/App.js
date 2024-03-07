@@ -1,4 +1,4 @@
-import { useStates } from 'react';
+import React, { useState } from 'react';
 
 import './styles/App.css';
 import './styles/reset.css';
@@ -8,6 +8,11 @@ import { SideMenu } from './components/SideMenu/SideMenu.js';
 import { ChatMessage } from './components/ChatMessage/ChatMessage.js';
 
 function App() {
+  const [input, setInput] = useState('');
+  const [chatlog, setChatlog] = useState([{
+    user: 'gpt',
+    message: 'Como posso te ajudar?'
+  }]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -27,14 +32,8 @@ function App() {
     }
     ]);
 
-    setInput();
+    setInput('');
   }
-
-  const [input, setInput] = useStates('');
-  const [chatlog, setChatlog] = useStates([{
-    user: 'gpt',
-    message: 'Como posso te ajudar?'
-  }]);
 
   return (
     <div className="App">
@@ -43,11 +42,8 @@ function App() {
       <section className='chatbox'>
         <div className='chat-log'>
           {chatlog.map((message, index) => (
-            <ChatMessage>
-              key={index}
-              message={message}
-            </ChatMessage>
-          ))}
+              <ChatMessage key={index} message={message} /> 
+            ))}
         </div>
 
         <div className='chat-input-holder'>
@@ -57,8 +53,7 @@ function App() {
               className='chat-input-textarea'
               value={input}
               onChange={e => setInput(e.target.value)}
-            >
-            </input>
+            />
           </form>
         </div>
       </section>
